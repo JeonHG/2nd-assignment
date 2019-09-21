@@ -29,6 +29,9 @@ function init(){
 	start.innerText = "시작"
 	timer.innerHTML = ""
 	timer.append(plus, start, minus)
+	const analog = document.querySelector(".anlg-clock")
+	analog.style.transform = "rotate(270deg)"
+	analog.style.transformOrigin = 'left';
 	
 	const dgt_clock = document.querySelector(".dgt-clock")
 	dgt_clock.innerHTML = `${
@@ -40,6 +43,8 @@ function init(){
 			dgt_clock.innerHTML = `${
 				time < 10 ? `0${time}` : time
 			}`
+			sixtime = time*6+270
+			analog.style.transform = `rotate(${sixtime}deg)`;
 		} else {
 			// 그냥 else문 안에 아무것도 안 넣으면 버튼이 눌러지기는 하는데 동작이 없음
 			// 60일때 플러스 1 하면 61이 아니라 1로 감
@@ -56,6 +61,8 @@ function init(){
 			dgt_clock.innerHTML = `${
 				time < 10 ? `0${time}` : time
 			}`
+			sixtime = time*6+270
+			analog.style.transform = `rotate(${sixtime}deg)`;
 		} else{
 			// 0일때 - 누르면 60으로 가도 되지 않을까
 			time += 60
@@ -69,18 +76,22 @@ function init(){
 	function startClick(event){
 		plus.disabled = true
 		minus.disabled = true
+		start.disabled = true
 		let repeat = setInterval(function(){
 			if(time>0){
 				time--
 				dgt_clock.innerHTML = `${
 					time < 10 ? `0${time}` : time
 				}`
+				sixtime = time*6+270
+				analog.style.transform = `rotate(${sixtime}deg)`;
 				console.log("interval on")
 			} else{
 				clearInterval(repeat)
 				console.log("off")
 				plus.disabled = false
 				minus.disabled = false
+				start.disabled = false
 			}
 		}, 1000)
 	}
